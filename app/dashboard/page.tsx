@@ -8,37 +8,37 @@ export default async function DashboardPage() {
   return (
     <div className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div className="mb-10 animate-fade-in-up">
-        <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-4">
-          Welcome back, <br />
-          <span className="glow-text-brand">{session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0] || "User"}</span>
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-4 transform transition-all duration-500 hover:scale-[1.01]">
+          Bienvenido de nuevo, <br />
+          <span className="glow-text-brand">{session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0] || "Usuario"}</span>
         </h1>
-        <p className="text-gray-500 text-lg max-w-2xl">
-          You are currently accessing a protected workspace environment. Your session is active and secure.
+        <p className="text-slate-500 text-lg max-w-2xl font-medium">
+          Estás accediendo a un entorno de trabajo protegido. Tu sesión está activa y cifrada de extremo a extremo.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-panel p-8 rounded-[2rem] md:col-span-2 relative overflow-hidden group bg-white">
+        <div className="glass-panel-light p-8 rounded-[2rem] md:col-span-2 relative overflow-hidden group transition-all duration-500 hover:shadow-2xl hover:shadow-[#4285F4]/10 hover:-translate-y-1">
           <div className="relative z-10">
-            <div className="w-12 h-12 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mb-6">
+            <div className="w-12 h-12 bg-white border border-slate-100 shadow-sm rounded-2xl flex items-center justify-center mb-6 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
               <LayoutDashboard className="w-6 h-6 text-[#4285F4]" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">System Status</h2>
-            <p className="text-gray-500 text-sm mb-6">All security protocols are running normally. No breaches detected.</p>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Estado del Sistema</h2>
+            <p className="text-slate-500 text-sm mb-6 font-medium">Todos los protocolos de seguridad operan con normalidad. No se detectan anomalías.</p>
             
-            <div className="flex items-center gap-3 bg-green-50 border border-green-100 rounded-xl p-4">
-              <div className="w-3 h-3 rounded-full bg-green-500 shadow-sm animate-pulse"></div>
-              <span className="text-sm font-medium text-green-700">Connection Secure</span>
+            <div className="flex items-center gap-3 bg-white/60 border border-slate-200 rounded-xl p-4 transition-colors duration-300 group-hover:bg-white/90">
+              <div className="w-3 h-3 rounded-full bg-green-500 shadow-md animate-pulse"></div>
+              <span className="text-sm font-bold text-green-600">Conexión Segura Activa</span>
             </div>
           </div>
         </div>
 
-        <div className="glass-panel p-8 rounded-[2rem] flex flex-col justify-center items-center text-center relative overflow-hidden group bg-white">
-          <div className="relative z-10">
-            <div className="text-5xl font-black text-[#4285F4] mb-2">100%</div>
-            <div className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Uptime</div>
-            <button className="w-full py-2.5 px-4 rounded-xl border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm font-medium transition-all">
-              View Logs
+        <div className="glass-panel-light p-8 rounded-[2rem] flex flex-col justify-center items-center text-center relative overflow-hidden group transition-all duration-500 hover:shadow-2xl hover:shadow-[#4285F4]/10 hover:-translate-y-1">
+          <div className="relative z-10 w-full">
+            <div className="text-5xl font-black text-[#4285F4] mb-2 transform transition-all duration-500 group-hover:scale-110">100%</div>
+            <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Uptime del Servidor</div>
+            <button className="w-full py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-slate-700 bg-white/80 border border-slate-200 hover:bg-white hover:text-[#4285F4] hover:border-[#4285F4]/30 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0">
+              Ver Registros de Actividad
             </button>
           </div>
         </div>

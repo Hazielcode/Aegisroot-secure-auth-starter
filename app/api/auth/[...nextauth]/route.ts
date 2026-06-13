@@ -8,7 +8,6 @@ import { prisma } from "@/lib/prisma"
 import bcrypt from "bcrypt"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,

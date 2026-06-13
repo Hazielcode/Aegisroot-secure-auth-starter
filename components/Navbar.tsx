@@ -13,21 +13,21 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto glass-panel rounded-2xl px-6 py-3 flex justify-between items-center pointer-events-auto transition-all duration-300">
         <div className="flex-shrink-0">
           <Link href="/" className="text-xl font-bold flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-500 to-brand-600 flex items-center justify-center shadow-[0_0_15px_rgba(0,210,255,0.4)] group-hover:shadow-[0_0_25px_rgba(0,210,255,0.6)] transition-all">
+            <div className="w-8 h-8 rounded-full bg-[#4285F4] flex items-center justify-center shadow-md group-hover:shadow-lg transition-all">
               <span className="text-white text-lg font-black tracking-tighter">A</span>
             </div>
-            <span className="glow-text-brand hidden sm:block tracking-wide">Aegisroot</span>
+            <span className="text-gray-900 hidden sm:block tracking-wide">Aegisroot</span>
           </Link>
         </div>
         
         <div className="flex items-center gap-6">
           {status === "authenticated" ? (
             <>
-              <Link href="/dashboard" className="text-gray-400 hover:text-white flex items-center gap-2 transition-colors text-sm font-medium">
+              <Link href="/dashboard" className="text-gray-600 hover:text-gray-900 flex items-center gap-2 transition-colors text-sm font-medium">
                 <LayoutDashboard size={16} />
                 <span className="hidden sm:inline">Dashboard</span>
               </Link>
-              <Link href="/profile" className="text-gray-400 hover:text-white flex items-center gap-2 transition-colors text-sm font-medium">
+              <Link href="/profile" className="text-gray-600 hover:text-gray-900 flex items-center gap-2 transition-colors text-sm font-medium">
                 <UserIcon size={16} />
                 <span className="hidden sm:inline">Profile</span>
               </Link>
@@ -35,10 +35,10 @@ export default function Navbar() {
             </>
           ) : status === "unauthenticated" && (
             <>
-              <Link href="/signIn" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">
+              <Link href="/signIn" className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium">
                 Log in
               </Link>
-              <Link href="/signIn" className="px-5 py-2 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition-all text-sm shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+              <Link href="/signIn" className="px-5 py-2 rounded-xl bg-[#4285F4] text-white font-semibold hover:bg-[#3367D6] transition-all text-sm shadow-md">
                 Get Started
               </Link>
             </>

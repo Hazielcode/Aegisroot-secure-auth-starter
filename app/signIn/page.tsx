@@ -36,56 +36,51 @@ export default function SignInPage() {
   return (
     <div className="flex-1 flex items-center justify-center p-4 min-h-[calc(100vh-80px)] mt-16">
       <div className="w-full max-w-md glass-panel rounded-[2rem] p-8 relative overflow-hidden group">
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-500 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-        <div className="absolute -top-32 -right-32 w-64 h-64 bg-brand-500/10 rounded-full blur-[60px] animate-pulse-slow"></div>
-        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-brand-600/10 rounded-full blur-[60px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
-
         <div className="relative z-10">
           <div className="text-center mb-10">
-            <div className="w-16 h-16 mx-auto bg-gradient-to-tr from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(0,210,255,0.3)] transform rotate-3 hover:rotate-0 transition-transform duration-300">
-              <Lock className="w-8 h-8 text-white" strokeWidth={1.5} />
+            <div className="w-16 h-16 mx-auto bg-white rounded-2xl flex items-center justify-center mb-6 shadow-md border border-gray-100">
+              <Lock className="w-8 h-8 text-[#4285F4]" strokeWidth={2} />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-3 tracking-tight">Access Securely</h1>
-            <p className="text-gray-400 text-sm">Sign in to your Aegisroot workspace</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
+            <p className="text-gray-500 text-sm">Sign in to your Aegisroot workspace</p>
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm text-center mb-6 backdrop-blur-md">
+            <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl text-sm text-center mb-6">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5 mb-8">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Email Address</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Email Address</label>
               <div className="relative group/input">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-gray-500 group-focus-within/input:text-brand-500 transition-colors" />
+                  <Mail className="h-4 w-4 text-gray-400 group-focus-within/input:text-[#4285F4] transition-colors" />
                 </div>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3 border border-gray-800 rounded-xl bg-black/40 text-white placeholder-gray-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all text-sm"
+                  className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all text-sm bg-white"
                   placeholder="you@example.com"
                 />
               </div>
             </div>
             
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Password</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Password</label>
               <div className="relative group/input">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-4 w-4 text-gray-500 group-focus-within/input:text-brand-500 transition-colors" />
+                  <Lock className="h-4 w-4 text-gray-400 group-focus-within/input:text-[#4285F4] transition-colors" />
                 </div>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3 border border-gray-800 rounded-xl bg-black/40 text-white placeholder-gray-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all text-sm"
+                  className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition-all text-sm bg-white"
                   placeholder="••••••••"
                 />
               </div>
@@ -94,7 +89,7 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 px-4 rounded-xl shadow-[0_0_20px_rgba(0,210,255,0.2)] text-sm font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 hover:shadow-[0_0_30px_rgba(0,210,255,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4 transform hover:-translate-y-0.5 active:translate-y-0"
+              className="w-full py-3.5 px-4 rounded-xl shadow-md text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4 transform hover:-translate-y-0.5 active:translate-y-0"
             >
               {isLoading ? "Authenticating..." : "Sign In"}
             </button>
@@ -102,17 +97,17 @@ export default function SignInPage() {
 
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-800/60"></div>
+              <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase tracking-widest font-semibold">
-              <span className="px-4 bg-[#0a0a0ab3] text-gray-500">Or continue with</span>
+              <span className="px-4 bg-white text-gray-400">Or continue with</span>
             </div>
           </div>
 
           <div className="space-y-3">
             <button
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-800 rounded-xl bg-black/40 hover:bg-white/5 text-gray-300 hover:text-white transition-all text-sm font-medium group/btn"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-200 rounded-xl bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 shadow-sm transition-all text-sm font-medium group/btn"
             >
               <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -125,7 +120,7 @@ export default function SignInPage() {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-800 rounded-xl bg-black/40 hover:bg-white/5 text-gray-300 hover:text-white transition-all text-sm font-medium group/btn"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-200 rounded-xl bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 shadow-sm transition-all text-sm font-medium group/btn"
               >
                 <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -134,7 +129,7 @@ export default function SignInPage() {
               </button>
               <button
                 onClick={() => signIn("discord", { callbackUrl: "/dashboard" })}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-800 rounded-xl bg-black/40 hover:bg-[#5865F2]/20 hover:border-[#5865F2]/50 text-gray-300 hover:text-[#5865F2] transition-all text-sm font-medium group/btn"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-[#5865F2]/20 rounded-xl bg-white hover:bg-[#5865F2]/5 text-[#5865F2] shadow-sm transition-all text-sm font-medium group/btn"
               >
                 <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" viewBox="0 0 127.14 96.36" fill="currentColor">
                   <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.31,60,73.31,53s5-12.74,11.43-12.74S96.2,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
@@ -146,7 +141,7 @@ export default function SignInPage() {
 
           <p className="mt-8 text-center text-sm text-gray-500">
             Don't have an account?{" "}
-            <Link href="/register" className="font-semibold text-brand-500 hover:text-brand-600 transition-colors">
+            <Link href="/register" className="font-semibold text-[#4285F4] hover:text-[#3367D6] transition-colors">
               Request access
             </Link>
           </p>

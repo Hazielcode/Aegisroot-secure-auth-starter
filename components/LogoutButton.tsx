@@ -7,9 +7,9 @@ export default function LogoutButton() {
   return (
     <button 
       onClick={() => signOut({ callbackUrl: "/signIn" })}
-      className="ml-4 px-4 py-2 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-all flex items-center gap-2 border border-slate-700"
+      className="ml-2 px-4 py-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all flex items-center gap-2 border border-red-500/20 hover:border-red-500/30 text-sm font-medium"
     >
-      <LogOut size={18} />
+      <LogOut size={16} />
       <span className="hidden sm:inline">Logout</span>
     </button>
   )

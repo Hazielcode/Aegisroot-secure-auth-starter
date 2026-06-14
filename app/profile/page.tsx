@@ -1,72 +1,105 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import { User as UserIcon, Mail } from "lucide-react"
-import Image from "next/image"
+"use client"
 
-export default async function ProfilePage() {
-  const session = await getServerSession(authOptions)
+import { useSession } from "next-auth/react"
+import { LayoutDashboard, Shield, User, LogOut, Mail } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { signOut } from "next-auth/react"
+
+export default function ProfilePage() {
+  const { data: session } = useSession()
+  const pathname = usePathname()
+
+  const navItems = [
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Perfil", href: "/profile", icon: User },
+  ]
 
   return (
-    <div className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-      <div className="glass-panel p-10 rounded-[2.5rem] relative overflow-hidden group bg-white">
-        <div className="relative z-10">
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-12 border-b border-gray-100 pb-12">
-            <div className="relative">
-              <div className="w-32 h-32 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden relative z-10 p-1 shadow-sm">
-                <div className="w-full h-full rounded-full overflow-hidden bg-gray-100 relative">
-                  {session?.user?.image ? (
-                    <Image 
-                      src={session.user.image} 
-                      alt="Profile picture" 
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <UserIcon className="w-16 h-16 text-gray-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-                  )}
-                </div>
-              </div>
-            </div>
-            
-            <div className="text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-[#4285F4] text-xs font-semibold tracking-widest uppercase mb-3">
-                <span className="w-2 h-2 rounded-full bg-[#4285F4] animate-pulse"></span>
-                Active Identity
-              </div>
-              <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-3 tracking-tight">
-                {session?.user?.name || "Anonymous User"}
-              </h1>
-              <div className="flex items-center justify-center md:justify-start gap-2 text-gray-600 font-mono text-sm bg-gray-50 px-4 py-2 rounded-xl border border-gray-200 w-fit mx-auto md:mx-0">
-                <Mail size={16} className="text-[#4285F4]" />
-                <span>{session?.user?.email}</span>
-              </div>
-            </div>
-          </div>
+    <div className="flex-1 flex min-h-screen">
+      {/* Sidebar Fijo 260px */}
+      <aside className="fixed left-0 top-0 bottom-0 w-[260px] bg-[rgba(255,255,255,0.85)] backdrop-blur-xl border-r border-[var(--ag-border)] flex flex-col z-20">
+        <div className="p-6">
+          <Link href="/" className="flex items-center gap-3">
+            <Shield className="w-8 h-8 text-[var(--ag-accent)] drop-shadow-[0_2px_8px_rgba(37,99,235,0.3)]" />
+            <span className="font-bold text-[var(--ag-text-primary)] text-xl tracking-tight">Aegisroot</span>
+          </Link>
+        </div>
+        
+        <nav className="flex-1 px-4 space-y-1">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 ${
+                  isActive 
+                    ? "bg-[var(--ag-accent-dim)] text-[var(--ag-accent)] font-semibold border-l-2 border-[var(--ag-accent)]" 
+                    : "text-[var(--ag-text-secondary)] hover:bg-[var(--ag-accent-dim)] hover:text-[var(--ag-accent)] font-medium"
+                }`}
+              >
+                <item.icon className="w-5 h-5" />
+                {item.name}
+              </Link>
+            )
+          })}
+        </nav>
 
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <span className="w-1 h-6 bg-[#4285F4] rounded-full"></span>
-              Payload Data
-            </h3>
-            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 relative group/code shadow-inner">
-              <div className="absolute top-4 right-4 text-xs font-mono text-gray-400 group-hover/code:text-[#4285F4] transition-colors">JSON</div>
-              <pre className="text-sm font-mono text-gray-700 overflow-auto whitespace-pre-wrap leading-relaxed">
-                <span className="text-gray-500">{`{`}</span>
-                <br/>
-                {Object.entries(session?.user || {}).map(([key, value], i, arr) => (
-                  <div key={key} className="pl-4">
-                    <span className="text-[#4285F4]">"{key}"</span>
-                    <span className="text-gray-400">: </span>
-                    <span className="text-[#34A853]">"{value}"</span>
-                    {i < arr.length - 1 ? <span className="text-gray-400">,</span> : null}
-                  </div>
-                ))}
-                <span className="text-gray-500">{`}`}</span>
-              </pre>
+        <div className="p-4 mt-auto border-t border-[var(--ag-border)]">
+          <div className="flex items-center gap-3 p-2">
+            <div className="w-10 h-10 rounded-full bg-[var(--ag-accent-dim)] flex items-center justify-center flex-shrink-0 text-[var(--ag-accent)] overflow-hidden">
+              {session?.user?.image ? (
+                <img src={session.user.image} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                <User size={20} />
+              )}
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-sm font-semibold text-[var(--ag-text-primary)] truncate">{session?.user?.name || "Usuario"}</p>
+              <p className="text-xs text-[var(--ag-text-muted)] truncate">{session?.user?.email}</p>
             </div>
           </div>
         </div>
-      </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 ml-[260px] flex items-center justify-center p-8 z-10 relative">
+        <div className="w-full max-w-md bg-[rgba(255,255,255,0.85)] backdrop-blur-xl border border-[var(--ag-border)] rounded-3xl p-10 shadow-[var(--ag-card-shadow)] text-center transition-all duration-300 hover:shadow-[0_12px_32px_rgba(37,99,235,0.12),_0_1px_0_rgba(255,255,255,0.9)_inset]">
+          <div className="mx-auto w-20 h-20 rounded-full ring-2 ring-blue-300 shadow-[0_0_24px_rgba(37,99,235,0.3)] mb-6 flex items-center justify-center bg-[var(--ag-bg-subtle)] overflow-hidden">
+            {session?.user?.image ? (
+              <img src={session.user.image} alt="Avatar" className="w-full h-full object-cover" />
+            ) : (
+              <User className="w-10 h-10 text-[var(--ag-accent)]" />
+            )}
+          </div>
+
+          <h2 className="text-2xl font-bold text-[var(--ag-text-primary)] mb-1">
+            {session?.user?.name || "Usuario Anónimo"}
+          </h2>
+          <div className="flex items-center justify-center gap-2 text-sm text-[var(--ag-text-muted)] mb-4">
+            <Mail size={14} />
+            {session?.user?.email}
+          </div>
+
+          <div className="mb-8">
+            <span className="inline-block bg-[var(--ag-accent-dim)] text-[var(--ag-accent)] text-xs font-medium rounded-full px-4 py-1.5 uppercase tracking-wider">
+              {/* This assumes NextAuth standard providers. For custom logic, maybe infer provider from image or just show active. */}
+              Usuario Autenticado
+            </span>
+          </div>
+
+          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[rgba(37,99,235,0.2)] to-transparent mb-8"></div>
+
+          <button
+            onClick={() => signOut({ callbackUrl: "/signIn" })}
+            className="w-full h-11 rounded-xl font-medium text-red-500 border border-red-200 hover:bg-red-50 transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <LogOut size={18} />
+            Cerrar sesión de forma segura
+          </button>
+        </div>
+      </main>
     </div>
   )
 }

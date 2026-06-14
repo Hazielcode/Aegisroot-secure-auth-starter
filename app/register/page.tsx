@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Mail, Lock, User as UserIcon } from "lucide-react"
+import { Mail, Lock, Shield, User } from "lucide-react"
+import AuthCard from "@/components/AuthCard"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -21,113 +22,116 @@ export default function RegisterPage() {
     try {
       const res = await fetch("/api/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
       })
 
       if (res.ok) {
         router.push("/signIn")
       } else {
         const data = await res.json()
-        setError(data.message || "Registration failed")
+        setError(data.message || "Ocurrió un error al registrarse.")
       }
     } catch (err) {
-      setError("An error occurred during registration.")
+      setError("Ocurrió un error al registrarse.")
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="flex-1 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-500"></div>
-        <div className="absolute -top-24 -left-24 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl"></div>
+    <div className="flex-1 flex items-center justify-center p-4 min-h-screen">
+      <AuthCard>
+        <div className="text-center mb-8">
+          <div className="mx-auto flex items-center justify-center mb-6">
+            <Shield className="w-12 h-12 text-[var(--ag-accent)] drop-shadow-[0_4px_12px_rgba(37,99,235,0.4)]" strokeWidth={1.5} />
+          </div>
+          <h1 className="text-2xl font-bold text-[var(--ag-text-primary)] mb-2">Crea tu cuenta</h1>
+          <p className="text-sm text-[var(--ag-text-muted)]">Únete a Aegisroot hoy mismo</p>
+        </div>
 
-        <div className="relative z-10">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
-            <p className="text-slate-400">Join us today</p>
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl text-sm flex items-center gap-2 mb-6">
+            <Lock className="w-4 h-4 flex-shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+          <div>
+            <label className="block text-xs font-medium text-[var(--ag-text-secondary)] mb-1.5">Nombre completo</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <User className="h-4 w-4 text-[var(--ag-text-muted)]" />
+              </div>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full pl-11 h-[44px] px-[16px] rounded-[12px] bg-[rgba(239,246,255,0.60)] border border-[var(--ag-border)] text-[var(--ag-text-primary)] placeholder-[var(--ag-text-muted)] focus:bg-white focus:border-[var(--ag-border-focus)] focus:shadow-[var(--ag-glow-ring)] focus:outline-none transition-all duration-200"
+                placeholder="Juan Pérez"
+              />
+            </div>
           </div>
 
-          {error && (
-            <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-3 rounded-lg text-sm text-center mb-6">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300 ml-1">Name</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <UserIcon className="h-5 w-5 text-slate-500" />
-                </div>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-700 rounded-xl bg-slate-800/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                  placeholder="John Doe"
-                />
+          <div>
+            <label className="block text-xs font-medium text-[var(--ag-text-secondary)] mb-1.5">Correo Electrónico</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Mail className="h-4 w-4 text-[var(--ag-text-muted)]" />
               </div>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-11 h-[44px] px-[16px] rounded-[12px] bg-[rgba(239,246,255,0.60)] border border-[var(--ag-border)] text-[var(--ag-text-primary)] placeholder-[var(--ag-text-muted)] focus:bg-white focus:border-[var(--ag-border-focus)] focus:shadow-[var(--ag-glow-ring)] focus:outline-none transition-all duration-200"
+                placeholder="tu@correo.com"
+              />
             </div>
-
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300 ml-1">Email</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-slate-500" />
-                </div>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-700 rounded-xl bg-slate-800/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                  placeholder="you@example.com"
-                />
+          </div>
+          
+          <div>
+            <label className="block text-xs font-medium text-[var(--ag-text-secondary)] mb-1.5">Contraseña</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Lock className="h-4 w-4 text-[var(--ag-text-muted)]" />
               </div>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pl-11 h-[44px] px-[16px] rounded-[12px] bg-[rgba(239,246,255,0.60)] border border-[var(--ag-border)] text-[var(--ag-text-primary)] placeholder-[var(--ag-text-muted)] focus:bg-white focus:border-[var(--ag-border-focus)] focus:shadow-[var(--ag-glow-ring)] focus:outline-none transition-all duration-200"
+                placeholder="••••••••"
+              />
             </div>
-            
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-slate-500" />
-                </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-700 rounded-xl bg-slate-800/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                  placeholder="••••••••"
-                  minLength={6}
-                />
-              </div>
-            </div>
+          </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-3 px-4 mt-6 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? "Creating account..." : "Create Account"}
-            </button>
-          </form>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="mt-2 w-full h-[44px] rounded-[12px] font-semibold text-[14px] text-white tracking-[0.01em] bg-[linear-gradient(135deg,#1D4ED8_0%,#2563EB_50%,#0EA5E9_100%)] shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:-translate-y-[1px] hover:shadow-[0_8px_24px_rgba(37,99,235,0.45)] active:translate-y-0 transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] disabled:opacity-50 flex items-center justify-center border-none"
+          >
+            {isLoading ? (
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            ) : "Registrarse"}
+          </button>
+        </form>
 
-          <p className="mt-8 text-center text-sm text-slate-400">
-            Already have an account?{" "}
-            <Link href="/signIn" className="font-medium text-indigo-400 hover:text-indigo-300 hover:underline transition-all">
-              Sign in
-            </Link>
-          </p>
-        </div>
-      </div>
+        <p className="mt-8 text-center text-sm text-[var(--ag-text-secondary)]">
+          ¿Ya tienes una cuenta?{" "}
+          <Link href="/signIn" className="font-semibold text-[var(--ag-accent)] hover:text-[var(--ag-accent-light)] transition-colors">
+            Inicia sesión
+          </Link>
+        </p>
+      </AuthCard>
     </div>
   )
 }
